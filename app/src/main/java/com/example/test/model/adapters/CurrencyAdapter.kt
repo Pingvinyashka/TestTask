@@ -23,7 +23,6 @@ class CurrencyAdapter(
 ) : RecyclerView.Adapter<CurrencyAdapter.ViewHolder>() {
 
     private var mCurrenciesList: ArrayList<RateLocalModel> = arrayListOf()
-    private var selectedPosition = 0
 
     fun updateRates(list: List<RateLocalModel>) {
 
@@ -43,15 +42,13 @@ class CurrencyAdapter(
 
                     this.filters = arrayOf<InputFilter>(DecimalDigitsInputFilter(2))
                     this.setText(rateModel.value.toFloat().scaleTo(2))
-                    this.setOnTouchListener { v, event ->
-                        if (event.action == MotionEvent.ACTION_UP)
+                    this.setOnTouchListener { _, event ->
+                        if (event.action == MotionEvent.ACTION_UP) {
                             click(rateModel)
+                        }
                         false
-
                     }
 
-                    if (this.text.length >= selectedPosition)
-                        this.setSelection(selectedPosition)
 
                     RxTextView.textChanges(this)
                         .skip(1)
@@ -59,7 +56,6 @@ class CurrencyAdapter(
                         .debounce(150, TimeUnit.MILLISECONDS)
                         .filter { it.isNotEmpty() }
                         .subscribe({ inputText ->
-                            selectedPosition = this.selectionStart
                             currencyChanges.invoke(rateModel, inputText)
                         }, {
                             it.printStackTrace()
