@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.test.ApplicationClass
@@ -18,11 +20,12 @@ import java.util.concurrent.TimeUnit
 
 
 class CurrencyAdapter(
-    private val currencyChanges: (RateLocalModel, CharSequence) -> Unit,
+    private val currencyChange: (RateLocalModel, CharSequence) -> Unit,
     private val click: (RateLocalModel) -> Unit
 ) : RecyclerView.Adapter<CurrencyAdapter.ViewHolder>() {
 
     private var mCurrenciesList: ArrayList<RateLocalModel> = arrayListOf()
+    private var selectedPosition = 0
 
     fun updateRates(list: List<RateLocalModel>) {
 
@@ -42,13 +45,17 @@ class CurrencyAdapter(
 
                     this.filters = arrayOf<InputFilter>(DecimalDigitsInputFilter(2))
                     this.setText(rateModel.value.toFloat().scaleTo(2))
-                    this.setOnTouchListener { _, event ->
+                    this.setOnTouchListener { v, event ->
                         if (event.action == MotionEvent.ACTION_UP) {
+
+                            selectedPosition = (v as EditText).getOffsetForPosition(event.getX(),0f)
                             click(rateModel)
                         }
                         false
                     }
 
+                    if (this.text.length >= selectedPosition )
+                        this.setSelection(selectedPosition)
 
                     RxTextView.textChanges(this)
                         .skip(1)
@@ -56,13 +63,17 @@ class CurrencyAdapter(
                         .debounce(150, TimeUnit.MILLISECONDS)
                         .filter { it.isNotEmpty() }
                         .subscribe({ inputText ->
-                            currencyChanges.invoke(rateModel, inputText)
+                            selectedPosition = this.selectionStart
+                            currencyChange.invoke(rateModel, inputText)
                         }, {
                             it.printStackTrace()
                         })
                 }
 
                 holder.codeTxt.text = rateModel.code
+                holder.codeTxt.setOnClickListener {
+                    Toast.makeText(ApplicationClass.instanse,"rateModel.code",Toast.LENGTH_SHORT).show()
+                }
                 holder.description.text = rateModel.description
                 holder.flag.setImageDrawable(ApplicationClass.instanse.getDrawable(rateModel.flag))
 
@@ -92,7 +103,7 @@ class CurrencyAdapter(
         val codeTxt = itemView.currencyCodeTxt
         val layout = itemView.currencyLayout
         val description = itemView.currencyDescriptionTxt
-        val flag = itemView.currencyFlagTxt
+        val flag = itemView.currencyFlagImg
     }
 
     open class ViewHolder(mViewGroup: View) : RecyclerView.ViewHolder(mViewGroup)

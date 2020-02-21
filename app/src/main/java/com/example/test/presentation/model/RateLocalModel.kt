@@ -10,8 +10,8 @@ import io.reactivex.SingleTransformer
 data class RateLocalModel(
     val code: String,
     var value: String,
-    var description: String,
-    var flag: Int,
+    var description: String = "",
+    var flag: Int = 0,
     var active: Boolean = false
 )
 

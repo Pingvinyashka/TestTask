@@ -15,9 +15,9 @@
         android:textColor="@color/colorPrimaryBlack"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/currencyFlagTxt"
-        app:layout_constraintStart_toEndOf="@+id/currencyFlagTxt"
-        app:layout_constraintTop_toTopOf="@+id/currencyFlagTxt"
+        app:layout_constraintBottom_toBottomOf="@+id/currencyFlagImg"
+        app:layout_constraintStart_toEndOf="@+id/currencyFlagImg"
+        app:layout_constraintTop_toTopOf="@+id/currencyFlagImg"
         app:layout_constraintVertical_bias="0.0"
         tools:text="RUB" />
 
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/currencyFlagTxt"
+        android:id="@+id/currencyFlagImg"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -54,8 +54,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text=""
-        app:layout_constraintBottom_toBottomOf="@+id/currencyFlagTxt"
-        app:layout_constraintStart_toEndOf="@+id/currencyFlagTxt"
+        app:layout_constraintBottom_toBottomOf="@+id/currencyFlagImg"
+        app:layout_constraintStart_toEndOf="@+id/currencyFlagImg"
         tools:text="Rouble" />
 
 

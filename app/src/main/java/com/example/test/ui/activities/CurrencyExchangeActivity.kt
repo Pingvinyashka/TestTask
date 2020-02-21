@@ -12,7 +12,7 @@ import com.example.test.presentation.view.CurrenciesExchangeView
 import kotlinx.android.synthetic.main.activity_currency_exchange.*
 
 
-class CurrenciesExchangeActivity : MvpAppCompatActivity(), CurrenciesExchangeView {
+class CurrencyExchangeActivity : MvpAppCompatActivity(), CurrenciesExchangeView {
 
     @InjectPresenter
     lateinit var presenter: CurrenciesExchangePresenter
