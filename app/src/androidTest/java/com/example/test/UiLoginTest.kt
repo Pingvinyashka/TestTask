@@ -1,17 +1,14 @@
 package com.example.test
 
 
-import android.Manifest
+
+
 import android.content.Context
-import android.content.Intent
-import android.view.KeyEvent
 import android.view.inputmethod.InputMethodManager
-import androidx.test.espresso.NoMatchingViewException
-import androidx.test.espresso.PerformException
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
-import androidx.test.rule.GrantPermissionRule
+
 
 import com.example.test.ui.activities.CurrencyExchangeActivity
 import com.kaspersky.kaspresso.kaspresso.Kaspresso
@@ -21,7 +18,7 @@ import com.kaspersky.kaspresso.testcases.api.testcase.TestCase
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.concurrent.TimeUnit
+
 
 
 @RunWith(AndroidJUnit4::class)

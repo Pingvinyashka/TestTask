@@ -17,8 +17,7 @@ class CurrencyRemoteDataSource @Inject constructor(
     override fun loadCurrencies(currency: String): Single<CurrencyRemoteModel> {
 
         return api.getCurrency(currency)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+
     }
 
     override fun getAdditionalData(): Single<Array<CurrencyAdditionalData>> {

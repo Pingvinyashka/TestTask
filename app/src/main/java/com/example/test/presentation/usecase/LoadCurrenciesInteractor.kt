@@ -1,7 +1,6 @@
 package com.example.test.presentation.usecase
 
 
-import com.example.test.extension.scaleTo
 import com.example.test.di.currencyExchange.CurrencyExchangeScope
 import com.example.test.model.repositories.currency.CurrencyDataSource
 import com.example.test.model.repositories.currency.local.CurrencyAdditionalData
@@ -9,7 +8,9 @@ import com.example.test.model.repositories.currency.remote.CurrencyRemoteModel
 import com.example.test.presentation.model.RateLocalModel
 import com.example.test.presentation.model.RateLocalTransformer
 import io.reactivex.*
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
+import io.reactivex.schedulers.Schedulers
 
 import javax.inject.Inject
 
@@ -25,7 +26,7 @@ class LoadCurrenciesInteractor @Inject constructor(
             .map { rateModelsList ->
 
                 rateModelsList.forEach {
-                    it.value = (it.value.toFloat() * base.value.toFloat()).scaleTo(10)
+                    it.value = Convertation().convertReceived(it,base)
                 }
                 rateModelsList
 
@@ -33,8 +34,9 @@ class LoadCurrenciesInteractor @Inject constructor(
                 list.sortedWith(compareBy({ !it.active }, { it.code }))
             }
             .toObservable()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
     }
-
 
     private fun loadCurrencies(base: String) =
         currencyRepository.loadCurrencies(base)
@@ -44,5 +46,5 @@ class LoadCurrenciesInteractor @Inject constructor(
                     Pair(remote, local)
                 })
             .compose(RateLocalTransformer())
-
 }
+

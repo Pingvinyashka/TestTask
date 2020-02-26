@@ -48,7 +48,7 @@ class CurrencyAdapter(
                     this.setOnTouchListener { v, event ->
                         if (event.action == MotionEvent.ACTION_UP) {
 
-                            selectedPosition = (v as EditText).getOffsetForPosition(event.getX(),0f)
+                            selectedPosition = (v as EditText).getOffsetForPosition(event.x,0f)
                             click(rateModel)
                         }
                         false
@@ -71,9 +71,7 @@ class CurrencyAdapter(
                 }
 
                 holder.codeTxt.text = rateModel.code
-                holder.codeTxt.setOnClickListener {
-                    Toast.makeText(ApplicationClass.instanse,"rateModel.code",Toast.LENGTH_SHORT).show()
-                }
+
                 holder.description.text = rateModel.description
                 holder.flag.setImageDrawable(ApplicationClass.instanse.getDrawable(rateModel.flag))
 

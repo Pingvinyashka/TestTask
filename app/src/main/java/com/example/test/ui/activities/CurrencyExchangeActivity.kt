@@ -1,5 +1,6 @@
 package com.example.test.ui.activities
 
+
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.MvpAppCompatActivity
